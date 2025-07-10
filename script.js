@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // ID бота и чата, в который будут приходить заявки
             const botToken = '8150678104:AAHbqokHXMN3XLllSdMt9-LIGZ0E06vBrV4';
-            const chatId = '700742419';
+            const chatId = '1264513616';
             
             // Формируем текст сообщения
             const message = `
