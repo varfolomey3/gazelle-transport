@@ -270,6 +270,7 @@ nav ul li a:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
+    margin-bottom: 40px;
 }
 
 .route-info-text {
@@ -278,6 +279,93 @@ nav ul li a:hover {
 
 .route-info-text p {
     margin-bottom: 15px;
+}
+
+/* Детали сервиса */
+.service-details {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.service-details h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    color: var(--primary-color);
+}
+
+.service-details h3:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    transform: translateX(-50%);
+}
+
+.service-details-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.service-details-icon {
+    font-size: 48px;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+}
+
+.service-details-text {
+    flex-grow: 1;
+}
+
+.highlight-text {
+    font-size: 18px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-left: 4px solid var(--secondary-color);
+    margin-bottom: 25px;
+}
+
+.specs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.specs-box {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.specs-box h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.specs-list {
+    list-style: none;
+    padding: 0;
+}
+
+.specs-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.specs-list li i {
+    color: var(--secondary-color);
+    margin-right: 10px;
+    min-width: 20px;
+    text-align: center;
 }
 
 /* Цены */
@@ -616,6 +704,11 @@ footer {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+
+    .specs-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -638,6 +731,15 @@ footer {
 
     .testimonial {
         flex: 0 0 calc(100% - 20px);
+    }
+
+    .service-details-content {
+        flex-direction: column;
+    }
+    
+    .service-details-icon {
+        text-align: center;
+        margin: 0 auto 20px;
     }
 }
 
