@@ -9,14 +9,14 @@
     <meta property="og:title" content="Грузоперевозки Челябинск-Магнитогорск | Быстро и надежно">
     <meta property="og:description" content="Частные грузоперевозки на ГАЗели между Челябинском и Магнитогорском. Быстрая и надежная доставка грузов по выгодным ценам.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="assets/img/main.jpeg">
+    <meta property="og:image" content="../assets/img/main.jpeg">
     <meta property="og:url" content="https://ваш-домен.рф">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../assets/img/favicon.ico" type="image/x-icon">
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -273,24 +273,11 @@
                         </div>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <div class="contact-text">
-                            <h3>Режим работы</h3>
-                            <p>Пн-Сб: 8:00 - 20:00</p>
-                            <p>Вс: по договоренности</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-car"></i>
+                        <i class="fas fa-truck"></i>
                         <div class="contact-text">
                             <h3>Транспорт</h3>
                             <p>Грузовая ГАЗель до 1.5 тонн</p>
                         </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://t.me/YourUsername" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
-                        <a href="https://wa.me/79193442196" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
                     </div>
                 </div>
                 <div class="contact-form-block">
@@ -299,45 +286,35 @@
                         <input type="hidden" name="_next" value="thankyou.html">
                         <input type="hidden" name="_captcha" value="false">
                         <div class="form-group">
-                            <label for="name">Ваше имя</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" name="name" placeholder="Ваше имя" required>
                         </div>
                         <div class="form-group">
-                            <label for="phone">Телефон</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <input type="tel" name="phone" placeholder="Телефон" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
+                            <input type="email" name="email" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <label for="route">Маршрут</label>
-                            <select id="route" name="route">
-                                <option value="chel-mag">Челябинск → Магнитогорск</option>
-                                <option value="mag-chel">Магнитогорск → Челябинск</option>
+                            <select name="route" required>
+                                <option value="">Выберите маршрут</option>
+                                <option value="Челябинск → Магнитогорск">Челябинск → Магнитогорск</option>
+                                <option value="Магнитогорск → Челябинск">Магнитогорск → Челябинск</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="cargo">Описание груза</label>
-                            <textarea id="cargo" name="cargo" rows="3"></textarea>
+                            <textarea name="cargo_description" placeholder="Описание груза" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="weight">Примерный вес (кг)</label>
-                            <input type="number" id="weight" name="weight">
+                            <input type="text" name="weight" placeholder="Примерный вес (кг)">
                         </div>
-                        <div class="form-group form-checkbox">
-                            <input type="checkbox" id="agreement" name="agreement" required>
-                            <label for="agreement">Я согласен на обработку персональных данных</label>
+                        <div class="form-group checkbox-group">
+                            <label>
+                                <input type="checkbox" name="agree" required>
+                                Я согласен на обработку персональных данных
+                            </label>
                         </div>
-                        <div class="form-submit">
-                            <button type="submit" class="btn btn-primary">Отправить заявку</button>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить заявку</button>
                     </form>
-                    <div id="formSuccess" class="form-success">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>Заявка успешно отправлена!</h3>
-                        <p>Я свяжусь с вами в ближайшее время.</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -365,7 +342,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© <span class="current-year">2023</span> ГАЗель-Перевозки Челябинск-Магнитогорск. Все права защищены.</p>
+                <p>© <span class="current-year">2025</span> ГАЗель-Перевозки Челябинск-Магнитогорск. Все права защищены.</p>
                 <p><a href="privacy.html">Политика конфиденциальности</a></p>
             </div>
         </div>
@@ -392,6 +369,6 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Яндекс.Метрика -->
 
-    <script src="assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html> 
