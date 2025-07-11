@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const contactInfoClone = document.createElement('div');
         contactInfoClone.className = 'mobile-menu-contact';
         contactInfoClone.innerHTML = `
-            <a href="tel:+79001234567" class="phone"><i class="fas fa-phone"></i> +7 (900) 123-45-67</a>
+            <a href="tel:+79193442196" class="phone"><i class="fas fa-phone"></i> +7 (919) 344-21-96</a>
+            <a href="tel:+79080641525" class="phone"><i class="fas fa-phone"></i> +7 (908) 064-15-25</a>
             <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/YourUsername" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://wa.me/79193442196" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
             </div>
         `;
@@ -90,6 +91,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Эффект при скролле для заголовка
+    const header = document.querySelector('header');
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
+    
     // Кнопка "наверх"
     const backToTop = document.querySelector('.back-to-top');
     if (backToTop) {
@@ -109,54 +122,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Слайдер отзывов
-    const testimonialsSlider = document.querySelector('.testimonials-slider');
-    const testimonials = document.querySelectorAll('.testimonial');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
+    // Анимация элементов при скролле
+    const revealElements = document.querySelectorAll('.services-grid, .advantages-grid, .price-table-container, .route-map, .route-info-text, .specs-box');
     
-    if (testimonialsSlider && testimonials.length > 0) {
-        let currentSlide = 0;
-        let slideWidth = testimonials[0].offsetWidth + parseInt(window.getComputedStyle(testimonials[0]).marginLeft) + parseInt(window.getComputedStyle(testimonials[0]).marginRight);
-        let maxSlide = testimonials.length - 1;
+    function revealOnScroll() {
+        let windowHeight = window.innerHeight;
         
-        // Для мобильной версии показываем по одному слайду
-        function updateSliderView() {
-            if (window.innerWidth <= 768) {
-                maxSlide = testimonials.length - 1;
-            } else {
-                maxSlide = testimonials.length - 3;
-                if (maxSlide < 0) maxSlide = 0;
+        revealElements.forEach(function(element) {
+            let elementPos = element.getBoundingClientRect().top;
+            if (elementPos < windowHeight - 50) {
+                element.classList.add('active');
             }
-            
-            slideWidth = testimonials[0].offsetWidth + parseInt(window.getComputedStyle(testimonials[0]).marginLeft) + parseInt(window.getComputedStyle(testimonials[0]).marginRight);
-            goToSlide(currentSlide);
-        }
-        
-        function goToSlide(slideIndex) {
-            if (slideIndex < 0) slideIndex = 0;
-            if (slideIndex > maxSlide) slideIndex = maxSlide;
-            currentSlide = slideIndex;
-            
-            testimonialsSlider.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
-        }
-        
-        prevBtn.addEventListener('click', function() {
-            goToSlide(currentSlide - 1);
         });
-        
-        nextBtn.addEventListener('click', function() {
-            goToSlide(currentSlide + 1);
-        });
-        
-        // Инициализация слайдера
-        updateSliderView();
-        
-        // Обновление при изменении размера экрана
-        window.addEventListener('resize', updateSliderView);
     }
     
-    // Форма обратной связи с интеграцией Telegram
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Проверяем при загрузке страницы
+    
+    // Добавляем эффект волны для кнопок
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(function(button) {
+        button.classList.add('btn-wave');
+        button.addEventListener('click', function(e) {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.className = 'btn-ripple';
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            button.appendChild(ripple);
+            
+            setTimeout(function() {
+                ripple.remove();
+            }, 600);
+        });
+    });
+    
+    // Форма обратной связи с интеграцией FormSubmit для GitHub Pages
     const contactForm = document.getElementById('contactForm');
     const formSuccess = document.getElementById('formSuccess');
     
@@ -174,12 +179,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 weight: contactForm.elements.weight.value ? contactForm.elements.weight.value + ' кг' : 'Не указан'
             };
             
-            // ID бота и чата, в который будут приходить заявки
-            const botToken = '8150678104:AAHbqokHXMN3XLllSdMt9-LIGZ0E06vBrV4';
-            const chatId = '1264513616';
+            // Показываем индикатор загрузки
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = '<span class="loading-spinner"></span>Отправка...';
+            submitButton.disabled = true;
             
-            // Формируем текст сообщения
-            const message = `
+            // Используем FormSubmit для отправки формы (поддерживается на GitHub Pages)
+            fetch('https://formsubmit.co/ajax/ar-73@mail.ru', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    phone: formData.phone,
+                    email: formData.email,
+                    route: formData.route,
+                    cargo_description: formData.cargo,
+                    weight: formData.weight,
+                    _subject: 'Новая заявка на грузоперевозку'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success === "true" || data.success === true) {
+                    // Также пытаемся отправить в Telegram, если не на GitHub Pages
+                    sendToTelegram(formData);
+                } else {
+                    console.error('FormSubmit Error:', data);
+                    showSuccess(); // Показываем успех для лучшего UX
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Пробуем запасной вариант с Telegram
+                sendToTelegram(formData);
+            })
+            .finally(() => {
+                // Восстанавливаем кнопку через 1.5 секунды для лучшего UX
+                setTimeout(() => {
+                    submitButton.innerHTML = originalButtonText;
+                    submitButton.disabled = false;
+                }, 1500);
+            });
+            
+            // Функция для отправки в Telegram
+            function sendToTelegram(formData) {
+                // ID бота и чата, в который будут приходить заявки
+                const botToken = '8150678104:AAHbqokHXMN3XLllSdMt9-LIGZ0E06vBrV4';
+                const chatId = '1264513616';
+                const backupChatId = '700742419'; // Резервный ID для админа
+                
+                // Формируем текст сообщения
+                const message = `
 🚚 Новая заявка на перевозку!
 
 👤 Имя: ${formData.name}
@@ -188,27 +242,10 @@ document.addEventListener('DOMContentLoaded', function() {
 🔄 Маршрут: ${formData.route}
 📦 Груз: ${formData.cargo}
 ⚖️ Вес: ${formData.weight}
-            `;
-            
-            // Функция для отправки в Telegram
-            function sendToTelegram() {
-                // Проверяем, заполнен ли chat_id
-                if (!chatId) {
-                    console.error('Ошибка: не указан chat_id получателя');
-                    alert('Ошибка настройки отправки сообщений. Пожалуйста, свяжитесь с администратором сайта.');
-                    return;
-                }
+                `;
                 
-                // Прямая отправка через API Telegram с использованием CORS-прокси
-                // Используем сервис cors-anywhere для обхода CORS-ограничений
-                const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+                // Прямая отправка через API Telegram
                 const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                
-                // Показываем индикатор загрузки
-                const submitButton = contactForm.querySelector('button[type="submit"]');
-                const originalButtonText = submitButton.innerHTML;
-                submitButton.innerHTML = 'Отправка...';
-                submitButton.disabled = true;
                 
                 fetch(apiUrl, {
                     method: 'POST',
@@ -231,46 +268,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.ok) {
                         showSuccess();
+                        // Дублируем сообщение второму админу
+                        try {
+                            fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    chat_id: backupChatId,
+                                    text: message,
+                                    parse_mode: 'HTML'
+                                })
+                            });
+                        } catch (e) {
+                            console.log('Ошибка отправки дубликата админу:', e);
+                        }
                     } else {
                         console.error('Telegram API Error:', data);
-                        // Запасной вариант с использованием CORS-прокси
-                        return fetch(corsProxy + apiUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                chat_id: chatId,
-                                text: message,
-                                parse_mode: 'HTML'
-                            })
-                        });
-                    }
-                })
-                .then(response => {
-                    if (response && !response.ok) {
-                        return response.json();
-                    }
-                    return null;
-                })
-                .then(data => {
-                    if (data && data.ok) {
-                        showSuccess();
-                    } else {
-                        // Если все методы отправки не сработали, все равно показываем успех
-                        console.log('Используем запасной вариант - показываем успешную отправку');
-                        showSuccess();
+                        showSuccess(); // Показываем успех для лучшего UX
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    // Для лучшего UX показываем успешную отправку
-                    showSuccess();
-                })
-                .finally(() => {
-                    // Восстанавливаем кнопку
-                    submitButton.innerHTML = originalButtonText;
-                    submitButton.disabled = false;
+                    showSuccess(); // Для лучшего UX показываем успешную отправку
                 });
             }
             
@@ -287,13 +308,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     formSuccess.style.display = 'none';
                 }, 5000);
             }
-            
-            // Отправляем форму
-            sendToTelegram();
         });
     }
     
-    // Обработчик для маски телефона (простая версия)
+    // Обработчик для маски телефона (продвинутая версия)
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
@@ -350,6 +368,60 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.value.length === 0) {
                 this.value = '+7 ';
             }
+        });
+    }
+    
+    // Добавляем текущий год в футер
+    const yearSpan = document.querySelector('.current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+    
+    // Анимация цифр в секции с преимуществами
+    function animateNumbers() {
+        const numberElements = document.querySelectorAll('.animate-number');
+        
+        numberElements.forEach(function(element) {
+            const targetNumber = parseInt(element.getAttribute('data-number'));
+            const duration = 2000; // 2 секунды на анимацию
+            const startTime = Date.now();
+            const startValue = 0;
+            
+            function updateNumber() {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime;
+                
+                if (elapsedTime < duration) {
+                    const progress = elapsedTime / duration;
+                    const currentValue = Math.floor(startValue + progress * (targetNumber - startValue));
+                    element.textContent = currentValue;
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = targetNumber;
+                }
+            }
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        updateNumber();
+                        observer.unobserve(element);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(element);
+        });
+    }
+    
+    animateNumbers();
+    
+    // Параллакс эффект для героя
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        window.addEventListener('scroll', function() {
+            const scroll = window.pageYOffset;
+            hero.style.backgroundPositionY = `${scroll * 0.5}px`;
         });
     }
 }); 

@@ -30,6 +30,9 @@ NAME, PHONE, ROUTE, CARGO_DESC, WEIGHT, CONFIRMATION = range(6)
 CHEL_MAG = "Челябинск → Магнитогорск"
 MAG_CHEL = "Магнитогорск → Челябинск"
 
+# Список администраторских ID (получателей уведомлений)
+ADMIN_IDS = [1264513616, 700742419]  # Добавьте сюда все ID администраторов, которым нужно отправлять уведомления
+
 # Файл для хранения заявок
 ORDERS_FILE = "orders.json"
 
@@ -155,6 +158,38 @@ def get_weight(update: Update, context: CallbackContext) -> int:
     
     return CONFIRMATION
 
+def test(update: Update, context: CallbackContext) -> None:
+    """Функция для тестирования отправки сообщений администраторам"""
+    user_id = update.effective_user.id
+    
+    # Проверяем, является ли запрашивающий пользователь администратором
+    if user_id not in ADMIN_IDS:
+        update.message.reply_text("⛔ Эта команда доступна только администраторам.")
+        logger.warning(f"Попытка несанкционированного доступа к /test от пользователя {update.effective_user.first_name} (ID: {user_id})")
+        return
+    
+    test_message = (
+        f"🧪 *Тестовое сообщение*\n\n"
+        f"Это тестовое сообщение для проверки функциональности отправки уведомлений.\n"
+        f"Если вы его получили, значит отправка уведомлений работает корректно.\n\n"
+        f"Время отправки: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    )
+    
+    # Пытаемся отправить тестовое сообщение всем администраторам
+    for admin_id in ADMIN_IDS:
+        try:
+            context.bot.send_message(chat_id=admin_id, text=test_message, parse_mode='Markdown')
+            logger.info(f"Тестовое сообщение успешно отправлено админу (ID: {admin_id})")
+        except Exception as e:
+            error_msg = f"Ошибка при отправке тестового сообщения админу {admin_id}: {e}"
+            logger.error(error_msg)
+            update.message.reply_text(f"❌ Ошибка отправки сообщения админу {admin_id}:\n{str(e)}")
+            
+    update.message.reply_text(
+        f"✅ Тестовое сообщение отправлено {len(ADMIN_IDS)} администраторам.\n"
+        f"Проверьте свои уведомления."
+    )
+
 def confirm_order(update: Update, context: CallbackContext) -> int:
     """Обработка подтверждения или отмены заказа"""
     query = update.callback_query
@@ -164,9 +199,14 @@ def confirm_order(update: Update, context: CallbackContext) -> int:
         # Добавляем дату создания заявки
         order_data = context.user_data['order']
         order_data['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        order_data['user_id'] = update.effective_user.id
         
         # Сохраняем заявку
-        save_order(order_data)
+        try:
+            save_order(order_data)
+            logger.info(f"Заявка успешно сохранена: {order_data}")
+        except Exception as e:
+            logger.error(f"Ошибка при сохранении заявки: {e}")
         
         # Отправляем уведомление администратору
         admin_notification = (
@@ -179,22 +219,51 @@ def confirm_order(update: Update, context: CallbackContext) -> int:
             f"⏰ *Время:* {order_data['timestamp']}"
         )
         
-        # Здесь вместо ADMIN_ID нужно подставить ваш Telegram ID
-        context.bot.send_message(chat_id=1264513616, text=admin_notification, parse_mode='Markdown')
+        # Отправляем уведомление всем администраторам
+        errors = []
+        success_count = 0
         
-        query.edit_message_text(
-            text="✅ Спасибо! Ваша заявка принята.\n\n"
-                 "Мы свяжемся с вами в ближайшее время для уточнения деталей перевозки.\n\n"
-                 "Для оформления новой заявки, используйте команду /start",
-            reply_markup=None
-        )
+        for admin_id in ADMIN_IDS:
+            try:
+                context.bot.send_message(chat_id=admin_id, text=admin_notification, parse_mode='Markdown')
+                success_count += 1
+                logger.info(f"Уведомление успешно отправлено админу (ID: {admin_id})")
+            except Exception as e:
+                error_msg = f"Ошибка при отправке уведомления администратору {admin_id}: {e}"
+                logger.error(error_msg)
+                errors.append(error_msg)
+                
+                # Попробуем отправить без форматирования, если проблема в нем
+                try:
+                    simplified_notification = f"НОВАЯ ЗАЯВКА! Имя: {order_data['name']}, Телефон: {order_data['phone']}, Маршрут: {order_data['route']}"
+                    context.bot.send_message(chat_id=admin_id, text=simplified_notification)
+                    logger.info(f"Упрощенное уведомление отправлено админу {admin_id}")
+                except Exception as e2:
+                    logger.error(f"Не удалось отправить даже упрощенное уведомление админу {admin_id}: {e2}")
         
+        # Логируем итоговый результат отправки уведомлений
+        logger.info(f"Отправка уведомлений: успешно - {success_count}, с ошибками - {len(errors)}")
+        
+        # Отправляем клиенту подтверждение
+        try:
+            query.edit_message_text(
+                text="✅ Спасибо! Ваша заявка принята.\n\n"
+                     "Мы свяжемся с вами в ближайшее время для уточнения деталей перевозки.\n\n"
+                     "Для оформления новой заявки, используйте команду /start",
+                reply_markup=None
+            )
+        except Exception as e:
+            logger.error(f"Ошибка при отправке подтверждения клиенту: {e}")
+            
     else:  # cancel
-        query.edit_message_text(
-            text="❌ Заявка отменена.\n\n"
-                 "Для создания новой заявки, используйте команду /start",
-            reply_markup=None
-        )
+        try:
+            query.edit_message_text(
+                text="❌ Заявка отменена.\n\n"
+                     "Для создания новой заявки, используйте команду /start",
+                reply_markup=None
+            )
+        except Exception as e:
+            logger.error(f"Ошибка при отправке сообщения об отмене: {e}")
     
     # Очищаем данные пользователя
     context.user_data.clear()
@@ -228,6 +297,20 @@ def help_command(update: Update, context: CallbackContext) -> None:
         parse_mode='Markdown'
     )
 
+def get_id(update: Update, context: CallbackContext) -> None:
+    """Отправляет текущему пользователю его ID"""
+    user_id = update.effective_user.id
+    chat_id = update.effective_chat.id
+    
+    update.message.reply_text(
+        f"🆔 *Ваша информация:*\n\n"
+        f"• User ID: `{user_id}`\n"
+        f"• Chat ID: `{chat_id}`\n\n"
+        f"*Как использовать:* Эту информацию нужно сообщить администратору бота для добавления вас в список получателей уведомлений.",
+        parse_mode='Markdown'
+    )
+    logger.info(f"ID info запрошен пользователем {update.effective_user.first_name} (ID: {user_id})")
+
 def main() -> None:
     """Запуск бота"""
     # Создаем Updater и передаем ему токен бота
@@ -254,6 +337,11 @@ def main() -> None:
     # Добавляем обработчики
     dispatcher.add_handler(conv_handler)
     dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler("id", get_id))
+    dispatcher.add_handler(CommandHandler("test", test))
+    
+    # Логируем запуск бота
+    logger.info("Бот запущен")
     
     # Запускаем бота
     updater.start_polling()

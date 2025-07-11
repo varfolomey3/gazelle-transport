@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Спасибо за заявку | Грузоперевозки Челябинск-Магнитогорск</title>
     <meta name="description" content="Спасибо за вашу заявку на грузоперевозку между Челябинском и Магнитогорском. Мы свяжемся с вами в ближайшее время.">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -20,24 +20,29 @@
             justify-content: center;
             text-align: center;
             padding: 20px;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/2199293/pexels-photo-2199293.jpeg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/img/main.jpeg') center/cover no-repeat;
             color: white;
+            animation: fadeIn 1s ease;
         }
         
         .thank-you-box {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             color: var(--text-color);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
             max-width: 600px;
             width: 100%;
+            animation: scaleIn 0.5s ease-out;
+            transform: translateY(0);
+            opacity: 1;
         }
         
         .thank-you-icon {
             font-size: 80px;
             color: #28a745;
             margin-bottom: 20px;
+            animation: bounce 1s ease infinite alternate;
         }
         
         .thank-you-title {
@@ -56,11 +61,26 @@
             margin: 30px 0;
             padding: 20px;
             background-color: #f8f9fa;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-details:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
         }
         
         .contact-details p {
             margin-bottom: 10px;
+        }
+        
+        .contact-details a {
+            transition: var(--transition);
+        }
+        
+        .contact-details a:hover {
+            color: var(--secondary-color);
         }
         
         .thank-you-buttons {
@@ -68,6 +88,35 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+        }
+        
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         @media (max-width: 768px) {
@@ -106,9 +155,34 @@
             
             <div class="thank-you-buttons">
                 <a href="index.html" class="btn btn-primary">Вернуться на главную</a>
-                <a href="https://t.me/YOUR_BOT_USERNAME" class="btn btn-secondary" target="_blank">Написать в Telegram</a>
+                <a href="https://t.me/YourUsername" class="btn btn-secondary" target="_blank">Написать в Telegram</a>
             </div>
         </div>
     </div>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- Яндекс.Метрика -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(XXXXXXXX, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Яндекс.Метрика -->
 </body>
 </html> 

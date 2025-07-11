@@ -9,14 +9,28 @@
     <meta property="og:title" content="Грузоперевозки Челябинск-Магнитогорск | Быстро и надежно">
     <meta property="og:description" content="Частные грузоперевозки на ГАЗели между Челябинском и Магнитогорском. Быстрая и надежная доставка грузов по выгодным ценам.">
     <meta property="og:type" content="website">
-    <link rel="stylesheet" href="styles.css">
+    <meta property="og:image" content="assets/img/main.jpeg">
+    <meta property="og:url" content="https://ваш-домен.рф">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    <!-- End Google Tag Manager -->
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <header>
         <div class="container">
             <div class="logo">
@@ -101,6 +115,9 @@
                     </div>
                     <h3>Всегда вовремя</h3>
                     <p>Соблюдаю сроки доставки и ценю ваше время</p>
+                    <div class="advantage-stats">
+                        <span class="animate-number" data-number="98">0</span>% заказов выполнены в срок
+                    </div>
                 </div>
                 <div class="advantage-item">
                     <div class="advantage-icon">
@@ -108,6 +125,9 @@
                     </div>
                     <h3>Безопасность</h3>
                     <p>Гарантирую сохранность груза при транспортировке</p>
+                    <div class="advantage-stats">
+                        <span class="animate-number" data-number="100">0</span>% сохранность грузов
+                    </div>
                 </div>
                 <div class="advantage-item">
                     <div class="advantage-icon">
@@ -115,6 +135,9 @@
                     </div>
                     <h3>Доступные цены</h3>
                     <p>Предлагаю конкурентные тарифы без скрытых платежей</p>
+                    <div class="advantage-stats">
+                        <span class="animate-number" data-number="15">0</span>% экономия на перевозках
+                    </div>
                 </div>
                 <div class="advantage-item">
                     <div class="advantage-icon">
@@ -122,6 +145,9 @@
                     </div>
                     <h3>Большой опыт</h3>
                     <p>Имею многолетний опыт перевозок и отлично знаю маршрут</p>
+                    <div class="advantage-stats">
+                        <span class="animate-number" data-number="8">0</span>+ лет опыта работы
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,13 +288,16 @@
                         </div>
                     </div>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://t.me/YourUsername" class="social-link" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://wa.me/79193442196" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
                         <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
                     </div>
                 </div>
                 <div class="contact-form-block">
-                    <form id="contactForm" class="contact-form">
+                    <form id="contactForm" class="contact-form" action="https://formsubmit.co/ar-73@mail.ru" method="POST">
+                        <input type="hidden" name="_subject" value="Новая заявка на грузоперевозку">
+                        <input type="hidden" name="_next" value="thankyou.html">
+                        <input type="hidden" name="_captcha" value="false">
                         <div class="form-group">
                             <label for="name">Ваше имя</label>
                             <input type="text" id="name" name="name" required>
@@ -336,8 +365,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2023 ГАЗель-Перевозки Челябинск-Магнитогорск. Все права защищены.</p>
-                <p><a href="#">Политика конфиденциальности</a></p>
+                <p>© <span class="current-year">2023</span> ГАЗель-Перевозки Челябинск-Магнитогорск. Все права защищены.</p>
+                <p><a href="privacy.html">Политика конфиденциальности</a></p>
             </div>
         </div>
     </footer>
@@ -346,6 +375,23 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Яндекс.Метрика -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(XXXXXXXX, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Яндекс.Метрика -->
+
+    <script src="assets/js/script.js"></script>
 </body>
 </html> 
