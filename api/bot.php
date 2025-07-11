@@ -1,7 +1,7 @@
 <?php
 // Конфигурация бота
 $botToken = '8150678104:AAHbqokHXMN3XLllSdMt9-LIGZ0E06vBrV4'; // Ваш токен бота
-$adminChatId = '700742419';
+$adminChatId = '1264513616';
 
 // Получаем данные запроса
 $update = json_decode(file_get_contents('php://input'), true);
